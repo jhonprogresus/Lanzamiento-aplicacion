@@ -1,44 +1,39 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { transcribeAudio, isApiKeyConfigured } from './services/geminiService.js';
 
-enum RecordingStatus {
-  IDLE = 'idle',
-  RECORDING = 'recording',
-  STOPPED = 'stopped',
-}
-
-type HistoryItem = {
-    timestamp: number;
-    transcription: string;
+const RecordingStatus = {
+  IDLE: 'idle',
+  RECORDING: 'recording',
+  STOPPED: 'stopped',
 };
 
 const HISTORY_STORAGE_KEY = 'transcriptionHistory';
 
-const formatTime = (seconds: number): string => {
+const formatTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
   return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
 };
 
-const MicIcon: React.FC<{ className?: string }> = ({ className }) => (
+const MicIcon = ({ className }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3ZM17 11a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2Z" />
     </svg>
 );
 
-const StopIcon: React.FC<{ className?: string }> = ({ className }) => (
+const StopIcon = ({ className }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M6 6h12v12H6V6Z" />
     </svg>
 );
 
-const DownloadIcon: React.FC<{ className?: string }> = ({ className }) => (
+const DownloadIcon = ({ className }) => (
     <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 15.586 6.707 10.293l1.414-1.414L12 12.758l3.879-3.879 1.414 1.414L12 15.586ZM12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16Zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z" />
     </svg>
 );
 
-const LoaderIcon: React.FC<{ className?: string }> = ({ className }) => (
+const LoaderIcon = ({ className }) => (
     <svg className={`animate-spin ${className}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -47,18 +42,18 @@ const LoaderIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 
 export default function App() {
-    const [recordingStatus, setRecordingStatus] = useState<RecordingStatus>(RecordingStatus.IDLE);
-    const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
-    const [audioUrl, setAudioUrl] = useState<string | null>(null);
-    const [transcription, setTranscription] = useState<string>('');
-    const [isTranscribing, setIsTranscribing] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-    const [timer, setTimer] = useState<number>(0);
-    const [history, setHistory] = useState<HistoryItem[]>([]);
+    const [recordingStatus, setRecordingStatus] = useState(RecordingStatus.IDLE);
+    const [audioBlob, setAudioBlob] = useState(null);
+    const [audioUrl, setAudioUrl] = useState(null);
+    const [transcription, setTranscription] = useState('');
+    const [isTranscribing, setIsTranscribing] = useState(false);
+    const [error, setError] = useState(null);
+    const [timer, setTimer] = useState(0);
+    const [history, setHistory] = useState([]);
 
-    const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-    const audioChunksRef = useRef<Blob[]>([]);
-    const timerIntervalRef = useRef<number | null>(null);
+    const mediaRecorderRef = useRef(null);
+    const audioChunksRef = useRef([]);
+    const timerIntervalRef = useRef(null);
 
     useEffect(() => {
         try {
@@ -151,7 +146,7 @@ export default function App() {
             
             // Only add to history on successful transcription
             if (!result.startsWith("Error:")) {
-                const newHistoryItem: HistoryItem = { timestamp: Date.now(), transcription: result };
+                const newHistoryItem = { timestamp: Date.now(), transcription: result };
                 const updatedHistory = [newHistoryItem, ...history];
                 setHistory(updatedHistory);
                 localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updatedHistory));
@@ -191,7 +186,7 @@ export default function App() {
         setTimer(0);
     };
 
-    const handleSelectHistory = (selectedItem: HistoryItem) => {
+    const handleSelectHistory = (selectedItem) => {
         setRecordingStatus(RecordingStatus.STOPPED);
         setAudioBlob(null);
         if (audioUrl) {

@@ -8,11 +8,11 @@ if (isApiKeyConfigured) {
     ai = new GoogleGenAI({ apiKey: API_KEY });
 }
 
-const blobToBase64 = <T,>(blob: Blob): Promise<string> => {
+const blobToBase64 = (blob) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      const base64data = reader.result as string;
+      const base64data = reader.result;
       resolve(base64data.split(',')[1]);
     };
     reader.onerror = (error) => {
@@ -22,7 +22,7 @@ const blobToBase64 = <T,>(blob: Blob): Promise<string> => {
   });
 };
 
-export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
+export const transcribeAudio = async (audioBlob) => {
   if (!isApiKeyConfigured) {
     return "Error: La API Key de Google AI no está configurada. Por favor, configúrala en el archivo 'services/config.js'.";
   }
