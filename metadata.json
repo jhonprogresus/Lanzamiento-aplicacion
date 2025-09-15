@@ -1,0 +1,7 @@
+{
+  "name": "Copy of Grabadora - Emperatriz Arias",
+  "description": "Una aplicación web para grabar voz, transcribirla usando IA y exportar el texto como un archivo .txt. Diseñada para una experiencia móvil.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

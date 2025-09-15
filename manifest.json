@@ -1,0 +1,17 @@
+{
+  "name": "Grabadora - Emperatriz Arias",
+  "short_name": "Grabadora EA",
+  "description": "Grabadora de voz y transcriptor para la Psicóloga Emperatriz Arias.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgcng9IjQiIGZpbGw9IiMxMTE4MjciLz48cGF0aCBkPSJNMTIgMTRhMyAzIDAgMCAwIDMtM1Y1YTMgMyAwIDAgMC02IDB2NmEzIDMgMCAwIDAgMyAzWk0xNyAxMWExIDUgNSAwIDAgMS0xMCAwSDVhNyA3IDAgMCAwIDYgNi45MlYyMWgydi0zLjA4QTcgNyAwIDAgMCAxOSAxMWgtMloiIGZpbGw9IiMyMmQzZWUiLz48L3N2Zz4=",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
+    }
+  ]
+}
