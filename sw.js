@@ -5,6 +5,7 @@ const URLS_TO_CACHE = [
   './index.js',
   './App.js',
   './services/geminiService.js',
+  './services/config.js',
   './manifest.json',
   'https://unpkg.com/@babel/standalone/babel.min.js',
   'https://cdn.tailwindcss.com'

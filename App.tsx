@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { transcribeAudio, isApiKeyConfigured } from './services/geminiService.js';
+import { transcribeAudio } from './services/geminiService.js';
 
 enum RecordingStatus {
   IDLE = 'idle',
@@ -149,13 +149,10 @@ export default function App() {
             const result = await transcribeAudio(audioBlob);
             setTranscription(result);
             
-            // Only add to history on successful transcription
-            if (!result.startsWith("Error:")) {
-                const newHistoryItem: HistoryItem = { timestamp: Date.now(), transcription: result };
-                const updatedHistory = [newHistoryItem, ...history];
-                setHistory(updatedHistory);
-                localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updatedHistory));
-            }
+            const newHistoryItem: HistoryItem = { timestamp: Date.now(), transcription: result };
+            const updatedHistory = [newHistoryItem, ...history];
+            setHistory(updatedHistory);
+            localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updatedHistory));
 
         } catch (err) {
             console.error(err);
@@ -213,12 +210,6 @@ export default function App() {
     return (
         <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-gray-900 text-gray-100">
             <div className="w-full max-w-md mx-auto bg-gray-800 rounded-2xl shadow-2xl p-6 space-y-6">
-                {!isApiKeyConfigured && (
-                    <div className="bg-yellow-900/50 border border-yellow-700 text-yellow-300 px-4 py-3 rounded-lg text-center">
-                        <p className="font-bold">Atención: Configuración Requerida</p>
-                        <p className="text-sm">La API Key de Google AI no está configurada. La transcripción no funcionará hasta que se añada la clave en el archivo `services/config.js`.</p>
-                    </div>
-                )}
                 <header className="text-center">
                     <h1 className="text-2xl font-bold text-cyan-400">Uso exclusivo para la Psicóloga Emperatriz Arias</h1>
                     <p className="text-gray-400 mt-2">Graba, transcribe y exporta tu voz</p>

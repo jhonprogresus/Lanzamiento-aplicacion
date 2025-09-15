@@ -1,12 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
-import { API_KEY } from './config.js';
 
-let ai;
-export const isApiKeyConfigured = API_KEY && API_KEY !== "PEGA_AQUI_TU_API_KEY";
-
-if (isApiKeyConfigured) {
-    ai = new GoogleGenAI({ apiKey: API_KEY });
-}
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const blobToBase64 = <T,>(blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -23,9 +17,6 @@ const blobToBase64 = <T,>(blob: Blob): Promise<string> => {
 };
 
 export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
-  if (!isApiKeyConfigured) {
-    return "Error: La API Key de Google AI no está configurada. Por favor, configúrala en el archivo 'services/config.js'.";
-  }
   try {
     const mimeType = audioBlob.type;
     const base64Audio = await blobToBase64(audioBlob);
