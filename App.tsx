@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { transcribeAudio } from './services/geminiService';
+import { transcribeAudio } from './services/geminiService.js';
 
 enum RecordingStatus {
   IDLE = 'idle',

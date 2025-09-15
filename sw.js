@@ -2,9 +2,9 @@ const CACHE_NAME = 'grabadora-emperatriz-arias-cache-v1';
 const URLS_TO_CACHE = [
   './',
   './index.html',
-  './index.tsx',
-  './App.tsx',
-  './services/geminiService.ts',
+  './index.js',
+  './App.js',
+  './services/geminiService.js',
   './manifest.json',
   'https://unpkg.com/@babel/standalone/babel.min.js',
   'https://cdn.tailwindcss.com'
